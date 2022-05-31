@@ -45,7 +45,7 @@ export default function Login() {
         e.preventDefault();
 
 
-        fetch('https://iskulbukol.herokuapp.com//users/login', {
+        fetch('https://iskulbukol.herokuapp.com/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
