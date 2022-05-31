@@ -43,7 +43,7 @@ export default function CourseCard({ courseProp }) {
                 <Card.Subtitle>Description:</Card.Subtitle>
                 <Card.Text>{description}</Card.Text>
                 <Card.Subtitle>Price:</Card.Subtitle>
-                <Card.Text>{price}</Card.Text>
+                <Card.Text>{price.toLocaleString()}</Card.Text>
 
                 <Card.Text>Enrollees: {count} </Card.Text>
                 <Card.Text>Seats Available: {seat} </Card.Text>
