@@ -27,7 +27,7 @@ export default function CoursePage() {
 
 
     const fetchData = () => {
-        fetch('http://localhost:4000/courses/all')
+        fetch('https://iskulbukol.herokuapp.com/courses/all')
             .then(res => res.json())
             .then(data => {
                 console.log(data)
