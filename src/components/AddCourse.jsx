@@ -23,7 +23,7 @@ export default function AddCourse({ fetchData }) {
     const addCourse = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:4000/courses/create', {
+        fetch('https://iskulbukol.herokuapp.com/courses/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

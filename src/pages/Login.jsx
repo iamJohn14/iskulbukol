@@ -12,7 +12,7 @@ export default function Login() {
     - it is a method in JS< which allows to send a request to an api and process its response.
 
     fetch('url', {optional object})
-    - url from the API (http://localhost:4000/users/login) (https://heroku.com/users/login)
+    - url from the API (https://iskulbukol.herokuapp.com/users/login) (https://heroku.com/users/login)
     - {optional objects} ojbects which contains additional information about our requests such as method, the body and the headers: content-type, authorization
 
     // getting a response is a usually a two-stage proces
@@ -45,7 +45,7 @@ export default function Login() {
         e.preventDefault();
 
 
-        fetch('http://localhost:4000/users/login', {
+        fetch('https://iskulbukol.herokuapp.com/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -91,7 +91,7 @@ export default function Login() {
                     })
 
                     // get user's details from our token
-                    fetch('http://localhost:4000/users/details', {
+                    fetch('https://iskulbukol.herokuapp.com/users/details', {
                         headers: {
                             Authorization: `Bearer ${data.accessToken}`
                         }
