@@ -7,30 +7,15 @@ import { Navigate, useNavigate } from 'react-router-dom';
 export default function Login() {
 
 
-    /* 
-    Note for fetch()
-    - it is a method in JS< which allows to send a request to an api and process its response.
-
-    fetch('url', {optional object})
-    - url from the API (https://iskulbukol.herokuapp.com/users/login) (https://heroku.com/users/login)
-    - {optional objects} ojbects which contains additional information about our requests such as method, the body and the headers: content-type, authorization
-
-    // getting a response is a usually a two-stage proces
-    .then (response => response.json) ===> parse the response as JSON
-    .then (actualData => console.log(actualData)) ====> process the result of the response
-    */
-
     const navigate = useNavigate();
 
-
-    // Consume the User Context object and its properties to use for user validation and to get the email coming from the login
 
     const { user, setUser } = useContext(UserContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // button
+
     const [isActive, setIsActive] = useState(true);
 
     useEffect(() => {
@@ -45,7 +30,7 @@ export default function Login() {
         e.preventDefault();
 
 
-        fetch('https://iskulbukol.herokuapp.com/users/login', {
+        fetch('https://weekendbakermnl.herokuapp.com/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -55,28 +40,7 @@ export default function Login() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
 
-
-
-
-                /* 
-                // set the email of the authenticated user in the localStorage
-                // localStorage.setItem('propertyName', value)
-                // setItem to store information in local storage
-                localStorage.setItem('email', email);
-        
-                // set the global user state to have properties obtained from local storage
-                setUser({
-                    email: localStorage.getItem('email')
-                })
-        
-        
-                // clear inputs
-                setEmail('');
-                setPassword('');
-        
-                // refreshPage(); */
 
                 if (data.accessToken !== undefined) {
                     localStorage.setItem('accessToken', data.accessToken);
@@ -87,18 +51,16 @@ export default function Login() {
                     Swal.fire({
                         title: 'Yay!',
                         icon: 'success',
-                        text: `You are now login!`
+                        text: `You are now logged in!`
                     })
 
-                    // get user's details from our token
-                    fetch('https://iskulbukol.herokuapp.com/users/details', {
+                    fetch('https://weekendbakermnl.herokuapp.com/users/details', {
                         headers: {
                             Authorization: `Bearer ${data.accessToken}`
                         }
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log(data)
 
 
                             if (data.isAdmin === true) {
@@ -108,11 +70,9 @@ export default function Login() {
                                     isAdmin: data.isAdmin
                                 })
 
-                                //push to the /courses
-                                navigate('/courses')
+                                navigate('/products')
 
                             } else {
-                                // if not an admin, push to '/' (homepage)
                                 navigate('/')
                             }
                         })
@@ -134,45 +94,50 @@ export default function Login() {
 
         (user.accessToken !== null) ?
 
-            <Navigate to="/courses" />
+            <Navigate to="/products" />
 
             :
-            <Form onSubmit={e => authentication(e)}>
-                <h1>Login</h1>
-                <Form.Group>
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        required
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
+            <div className='container-fluid d-flex flex-column align-items-center m-0 p-0' id="login1" >
+                <Form className="shadow p-5 mt-5 row" id="login" onSubmit={e => authentication(e)}>
+                    <h1 className='text-center'>Login</h1>
+                    <Form.Group className='pt-3'>
+                        <Form.Label>Email Address</Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter your email"
+                            required
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <Form.Text className="text-muted">
+                        </Form.Text>
+                    </Form.Group>
 
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Enter your password"
-                        required
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </Form.Group>
+                    <Form.Group className="pt-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Enter your password"
+                            required
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
 
-                {isActive ?
-                    <Button variant="primary" type="submit" className="mt-3">
-                        Submit
-                    </Button>
-                    :
-                    <Button variant="primary" type="submit" className="mt-3" disabled>
-                        Submit
-                    </Button>
-                }
-            </Form>
+                    {isActive ?
+                        <div className='d-flex align justify-content-center'>
+                            <Button variant="primary" type="submit" className="mt-3 text-center">
+                                Submit
+                            </Button>
+                        </div>
+                        :
+                        <div className='d-flex align justify-content-center'>
+                            <Button variant="primary" type="submit" className="mt-3 text-center" disabled>
+                                Submit
+                            </Button>
+                        </div>
+                    }
+                </Form>
+            </div>
     )
 }

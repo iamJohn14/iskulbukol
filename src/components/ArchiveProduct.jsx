@@ -1,10 +1,10 @@
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-export default function ArchiveCourse({ course, isActive, fetchData }) {
+export default function ArchiveProduct({ product, isActive, fetchData }) {
 
-    const archiveToggle = (courseId) => {
-        fetch(`https://iskulbukol.herokuapp.com/courses/${courseId}/archive`, {
+    const archiveToggle = (productId) => {
+        fetch(`https://weekendbakermnl.herokuapp.com/products/${productId}/archive`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -16,7 +16,7 @@ export default function ArchiveCourse({ course, isActive, fetchData }) {
                     Swal.fire({
                         title: 'success',
                         icon: 'success',
-                        text: 'Course successfully disabled'
+                        text: 'Product successfully disabled'
                     })
                     fetchData()
                 } else {
@@ -30,8 +30,8 @@ export default function ArchiveCourse({ course, isActive, fetchData }) {
             })
     }
 
-    const activateToggle = (courseId) => {
-        fetch(`https://iskulbukol.herokuapp.com/courses/${courseId}/activate`, {
+    const activateToggle = (productId) => {
+        fetch(`https://weekendbakermnl.herokuapp.com/products/${productId}/activate`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -43,7 +43,7 @@ export default function ArchiveCourse({ course, isActive, fetchData }) {
                     Swal.fire({
                         title: 'success',
                         icon: 'success',
-                        text: 'Course successfully enabled'
+                        text: 'Product successfully enabled'
                     })
                     fetchData()
                 } else {
@@ -62,11 +62,11 @@ export default function ArchiveCourse({ course, isActive, fetchData }) {
         <>
 
             {isActive ?
-                <Button variant="danger" size="sm" onClick={() => archiveToggle(course)}>Disable</Button>
+                <Button variant="danger" size="sm" onClick={() => archiveToggle(product)}>Disable</Button>
 
                 :
 
-                <Button variant="success" size="sm" onClick={() => activateToggle(course)}>Enable</Button>
+                <Button variant="success" size="sm" onClick={() => activateToggle(product)}>Enable</Button>
 
             }
 

@@ -1,52 +1,78 @@
-import { Row, Col, Card } from 'react-bootstrap';
+import { Carousel, Button } from 'react-bootstrap';
 
 
 
 export default function Highlights() {
     return (
 
-        <Row>
-            <Col xs={12} md={4}>
-                <Card className="cardHighlight">
-                    <Card.Body>
-                        <Card.Title>
-                            <h2>Learn From Home</h2>
-                        </Card.Title>
-                        <Card.Text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium iure unde numquam fugiat, nemo nam natus ut laborum nesciunt perferendis eum quaerat id accusamus nihil modi praesentium voluptate error ratione.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
 
-            <Col xs={12} md={4}>
-                <Card className="cardHighlight">
-                    <Card.Body>
-                        <Card.Title>
-                            <h2>Study Now, Pay Later</h2>
-                        </Card.Title>
-                        <Card.Text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium iure unde numquam fugiat, nemo nam natus ut laborum nesciunt perferendis eum quaerat id accusamus nihil modi praesentium voluptate error ratione.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
+        <>
+            {/* MOBILE */}
+            <div className='d-block d-md-none justify-content-center' id="carousel1">
+                < Carousel>
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg-mobile px-2"
+                            src="https://images.pexels.com/photos/9316530/pexels-photo-9316530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="First slide"
+                        />
 
-            <Col xs={12} md={4}>
-                <Card className="cardHighlight">
-                    <Card.Body>
-                        <Card.Title>
-                            <h2>Be Part of Our Community</h2>
-                        </Card.Title>
-                        <Card.Text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium iure unde numquam fugiat, nemo nam natus ut laborum nesciunt perferendis eum quaerat id accusamus nihil modi praesentium voluptate error ratione.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg-mobile px-2"
+                            src="https://images.pexels.com/photos/1169790/pexels-photo-1169790.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Second slide"
+                        />
 
-        </Row>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg-mobile px-2"
+                            src="https://images.pexels.com/photos/3602269/pexels-photo-3602269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Third slide"
+                        />
 
+                    </Carousel.Item>
+                </Carousel >
+            </div >
+
+            {/* MD - LG */}
+
+            <div className='d-none d-md-block justify-content-center' id="carousel2">
+                <Carousel id="carousel4">
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg px-5"
+                            src="https://images.pexels.com/photos/9316530/pexels-photo-9316530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="First slide"
+                        />
+
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg px-5"
+                            src="https://images.pexels.com/photos/1169790/pexels-photo-1169790.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Second slide"
+                        />
+
+
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000} className="py-3">
+                        <img
+                            className="d-flex carouselimg px-5"
+                            src="https://images.pexels.com/photos/3602269/pexels-photo-3602269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Third slide"
+                        />
+
+                        <Carousel.Caption>
+
+                        </Carousel.Caption>
+
+                    </Carousel.Item>
+                </Carousel>
+            </div>
+        </>
 
 
 

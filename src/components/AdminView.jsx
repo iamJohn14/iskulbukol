@@ -1,47 +1,47 @@
 import { Table } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import AddCourse from './AddCourse';
-import EditCourse from './EditCourse';
-import ArchiveCourse from './ArchiveCourse';
+import AddProduct from './AddProduct';
+import EditProduct from './EditProduct';
+import ArchiveProduct from './ArchiveProduct';
 
 
 
 
 export default function AdminView(props) {
 
-    const { coursesData, fetchData } = props;
+    const { productsData, fetchData } = props;
 
-    const [courses, setCourses] = useState([])
+    const [products, setProducts] = useState([])
 
 
     useEffect(() => {
 
-        const coursesArr = coursesData.map(course => {
+        const productArr = productsData.map(product => {
             return (
-                <tr key={course._id}>
-                    <td>{course._id}</td>
-                    <td>{course.name}</td>
-                    <td>{course.description}</td>
-                    <td>{parseFloat(course.price).toFixed(2)}</td>
-                    <td className={course.isActive ? "text-success" : "text-danger"}>{course.isActive ? "Available" : "Unavailable"}</td>
+                <tr key={product._id}>
+                    <td>{product._id}</td>
+                    <td>{product.name}</td>
+                    <td>{product.description}</td>
+                    <td>{parseFloat(product.price).toFixed(2)}</td>
+                    <td className={product.isActive ? "text-success" : "text-danger"}>{product.isActive ? "Available" : "Unavailable"}</td>
                     <td>
-                        <EditCourse course={course._id} fetchData={fetchData} />
+                        <EditProduct product={product._id} fetchData={fetchData} />
                     </td>
                     <td>
-                        <ArchiveCourse course={course._id} isActive={course.isActive} fetchData={fetchData} />
+                        <ArchiveProduct product={product._id} isActive={product.isActive} fetchData={fetchData} />
                     </td>
                 </tr>
             )
         })
 
-        setCourses(coursesArr)
-    }, [coursesData])
+        setProducts(productArr)
+    }, [productsData])
 
     return (
         <>
             <div className='text-center my-4'>
                 <h1> Admin Dashboard</h1>
-                <AddCourse fetchData={fetchData} />
+                <AddProduct fetchData={fetchData} />
             </div>
             <Table striped bordered hover responsive>
                 <thead className='bg-dark text-white'>
@@ -55,7 +55,7 @@ export default function AdminView(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {courses}
+                    {products}
                 </tbody>
             </Table>
         </>

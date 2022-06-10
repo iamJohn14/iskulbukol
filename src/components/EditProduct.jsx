@@ -2,27 +2,21 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
 
-export default function EditCourse({ course, fetchData }) {
+export default function EditProduct({ product, fetchData }) {
 
-    // states for editCourse modal
     const [showEdit, setShowEdit] = useState(false)
 
-    // state hook for the course data
-    const [courseId, setCourseId] = useState('');
+    const [productId, setProductId] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
 
-    // function openEdit to still get the data to the form while opening the modal
-
-    const openEdit = (courseId) => {
-        fetch(`https://iskulbukol.herokuapp.com/courses/${courseId}`)
+    const openEdit = (productId) => {
+        fetch(`http://localhost:4000/products/${productId}/detail`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
 
-                // populate all input values with the course information that we fetched
-                setCourseId(data._id)
+                setProductId(data._id)
                 setName(data.name)
                 setDescription(data.description)
                 setPrice(data.price)
@@ -31,8 +25,6 @@ export default function EditCourse({ course, fetchData }) {
         setShowEdit(true)
     }
 
-    // Function to handle the closing of the modal and reset all relevant states back to their default value
-
     const closeEdit = () => {
         setShowEdit(false)
         setName('')
@@ -40,11 +32,10 @@ export default function EditCourse({ course, fetchData }) {
         setPrice(0)
     }
 
-    // Function to change or update the specific course
-    const editCourse = (e, courseId) => {
+    const editProduct = (e, productId) => {
         e.preventDefault();
 
-        fetch(`https://iskulbukol.herokuapp.com/courses/${courseId}`, {
+        fetch(`https://weekendbakermnl.herokuapp.com/products/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,12 +49,11 @@ export default function EditCourse({ course, fetchData }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data === true) {
                     Swal.fire({
                         title: 'Success',
                         icon: 'success',
-                        text: 'Course successfully updated'
+                        text: 'Product successfully updated'
                     })
                     fetchData()
                     closeEdit()
@@ -81,15 +71,14 @@ export default function EditCourse({ course, fetchData }) {
 
     return (
         <>
-            <Button variant="primary" size="sm" onClick={() => openEdit(course)}>Update
+            <Button variant="primary" size="sm" onClick={() => openEdit(product)}>Update
             </Button >
 
 
-            {/* Edit Modal */}
             <Modal show={showEdit} onHide={closeEdit}>
-                <Form onSubmit={e => editCourse(e, courseId)}>
+                <Form onSubmit={e => editProduct(e, productId)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add Course</Modal.Title>
+                        <Modal.Title>Add Product</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>

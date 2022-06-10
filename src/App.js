@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import './App.css';
 import AppNavbar from './components/AppNavbar';
-import { Container } from 'react-bootstrap';
 import Home from './pages/Home'
-import CoursePage from './pages/CoursePage';
+import ProductPage from './pages/ProductPage';
+import SpecificProduct from './pages/SpecificProduct';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
-import SpecificCourse from './pages/SpecificCourse';
 import { UserProvider } from './UserContext';
+import Cart from './pages/Cart';
+import OrderPage from './pages/OrderPage';
 
 
 // react-router
@@ -39,17 +40,17 @@ function App() {
     <UserProvider value={{ user, setUser, unsetUser }}>
       <BrowserRouter>
         <AppNavbar />
-        <Container>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/courses' element={<CoursePage />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/logout' element={<Logout />} />
-            <Route path='/courses/:courseId' element={<SpecificCourse />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </Container>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/products' element={<ProductPage />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/products/:productId/detail' element={<SpecificProduct />} />
+          <Route path='/carts' element={<Cart />} />
+          <Route path='/orders' element={<OrderPage />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
       </BrowserRouter >
     </UserProvider>
   );

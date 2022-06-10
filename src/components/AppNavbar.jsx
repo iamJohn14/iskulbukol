@@ -1,53 +1,121 @@
-// React boostrap components
-import { useContext, useState } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-// react-router
-import { Link } from 'react-router-dom';
+import { useContext, useState, useEffect } from 'react';
+import { Navbar, Nav, Offcanvas, NavbarBrand } from 'react-bootstrap';
+
+import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../UserContext';
 
 
 export default function AppNavbar() {
 
-    // function refreshPage() {
-    //     window.location.reload(false);
-    // }
-
-
+    const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const [userId, setUserId] = useState('');
+
+
+    //add to cart function
+    const viewCart = (userId) => {
+
+        fetch('https://weekendbakermnl.herokuapp.com/users/details', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserId(data._id)
 
 
 
+                fetch(`https://weekendbakermnl.herokuapp.com/carts/${data._id}/view`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                    })
+                navigate(`/carts/${data._id}/view`)
 
-    // Store the user information (email) in the state
-    // getItem gets the key property in the localStorage
-    // const [user, setUser] = useState(localStorage.getItem('email'))
-    // console.log(user)
+
+
+            })
+    }
+
 
     return (
-        <Navbar bg="dark" expand="lg" variant="dark" className="mb-5">
-            <Navbar.Brand className="ms-3">Zuitt</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" className='me-3' xs={12} />
-            <Navbar.Collapse id="basic-navbar-nav" className='mx-3 '>
-                <Nav className="ms-auto">
-                    <Nav.Link as={Link} to="/">Home</Nav.Link>
-                    {/* Sample */}
-                    {/* <Link to=""></Link> */}
-                    <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
+        <Navbar variant='light' className='d-flex flex-row justify-content-between ps-3'>
+            {/* Mobile Nav */}
+
+            <Navbar.Toggle className='d-block d-md-none' aria-controls={`offcanvasNavbar-expand-${false}`} />
+            <Navbar.Offcanvas
+                id={`offcanvasNavbar-expand-${false}`}
+                aria-labelledby={`offcanvasNavbarLabel-expand-${false}`}
+                placement="start"
+                className='canvass'
+            >
+                <Offcanvas.Header closeButton className='justify-content-start'>
+                    <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${false}`}>
+                    </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body >
+                    <Nav className="flex-grow-1 pe-3">
+                        <Nav.Link id='navlink2' className='px-4 text-center' as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link id='navlink2' className='px-4 text-center' as={Link} to="/products">Products</Nav.Link>
+                        {(user.accessToken !== null) ?
+                            <Nav.Link id='navlink2' className='px-4 text-center' as={Link} to="/orders">Orders</Nav.Link>
+                            :
+
+                            <>
+                            </>
+                        }
+                    </Nav>
+                </Offcanvas.Body>
+            </Navbar.Offcanvas>
+
+            <Nav>
+                <Nav.Link as={Link} to="/">
+                    <NavbarBrand className='ms-3 d-none d-md-block'>WeekendBaker MNL</NavbarBrand></Nav.Link>
+            </Nav>
 
 
-                    {(user.accessToken !== null) ?
-                        <Nav.Link /* onClick={e => refreshPage(e)}  */ as={Link} to="/logout">Logout</Nav.Link>
-                        :
-                        <>
-                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                            <Nav.Link as={Link} to="/register">Register</Nav.Link>
-                        </>
-                    }
-                </Nav>
-            </Navbar.Collapse>
 
 
-        </Navbar>
+
+            <Nav className='d-none d-md-flex'>
+                <Nav.Link id='navlink' className='px-4' as={Link} to="/">Home</Nav.Link>
+                <Nav.Link id='navlink' className='px-4' as={Link} to="/products">Products</Nav.Link>
+                {(user.accessToken !== null) ?
+                    <Nav.Link id='navlink' as={Link} to="/orders">Orders</Nav.Link>
+                    :
+
+                    <>
+                    </>
+                }
+            </Nav>
+            <Nav className='me-3'>
+                {(user.accessToken !== null) ?
+                    <>
+                        <Nav.Link className='navlogo' as={Link} to="/carts"><img className="img-fluid navlogo2" alt="cart" src={require('../images/cart.png')} /></Nav.Link>
+                    </>
+                    :
+                    <></>
+                }
+
+
+                {(user.accessToken !== null) ?
+                    <Nav.Link id='navlink' as={Link} to="/logout">Logout</Nav.Link>
+                    :
+                    <>
+                        <Nav.Link id='navlink' as={Link} to="/login">Login</Nav.Link>
+                        <Nav.Link id='navlink' as={Link} to="/register">Register</Nav.Link>
+                    </>
+                }
+
+            </Nav>
+        </Navbar >
+
 
     )
 }
